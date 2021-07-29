@@ -131,13 +131,47 @@ implementer_cavium = {
 implementer_ampere = {
     'description': 'Ampere Computing',
     'flags': [
-        ['RTE_MACHINE', '"emag"'],
         ['RTE_CACHE_LINE_SIZE', 64],
-        ['RTE_MAX_LCORE', 32],
-        ['RTE_MAX_NUMA_NODES', 1]
     ],
     'part_number_config': {
-        '0x0': {'machine_args':  ['-march=armv8-a+crc+crypto', '-mtune=emag']}
+        '0x0': {
+            'machine_args':  ['-march=armv8-a+crc+crypto', '-mtune=emag'],
+            'flags': [
+                ['RTE_MACHINE', '"emag"'],
+                ['RTE_MAX_LCORE', 32],
+                ['RTE_MAX_NUMA_NODES', 1]
+            ]
+        },
+        '0xd0c': {
+            'machine_args':  ['-march=armv8.2-a+crypto', '-mtune=altra'],
+            'flags': [
+                ['RTE_MACHINE', '"altra"'],
+                ['RTE_MAX_LCORE', 160],
+                ['RTE_MAX_NUMA_NODES', 2],
+                ['RTE_ARM_FEATURE_ATOMICS', true],
+                ['RTE_USE_C11_MEM_MODEL', true],
+                ['RTE_MAX_MEM_MB', 1048576],
+                ['RTE_EAL_NUMA_AWARE_HUGEPAGES', true],
+                ['RTE_LIBRTE_VHOST_NUMA', true],
+                ['RTE_ARCH_ARM64_MEMCPY', true],
+                ['RTE_ARM64_MEMCPY_ALIGNED_THRESHOLD', 2048]
+            ]
+        },
+        '0xd0d': {
+            'machine_args':  ['-march=armv8.2-a+crypto', '-mtune=altramax'],
+            'flags': [
+                ['RTE_MACHINE', '"altramax"'],
+                ['RTE_MAX_LCORE', 256],
+                ['RTE_MAX_NUMA_NODES', 2],
+                ['RTE_ARM_FEATURE_ATOMICS', true],
+                ['RTE_USE_C11_MEM_MODEL', true],
+                ['RTE_MAX_MEM_MB', 1048576],
+                ['RTE_EAL_NUMA_AWARE_HUGEPAGES', true],
+                ['RTE_LIBRTE_VHOST_NUMA', true],
+                ['RTE_ARCH_ARM64_MEMCPY', true],
+                ['RTE_ARM64_MEMCPY_ALIGNED_THRESHOLD', 2048]
+            ]
+        }
     }
 }
 
@@ -260,6 +294,18 @@ soc_emag = {
     'part_number': '0x0'
 }
 
+soc_altra = {
+    'description': 'Ampere Altra',
+    'implementer': '0x50',
+    'part_number': '0xd0c'
+}
+
+soc_altramax = {
+    'description': 'Ampere Altra Max',
+    'implementer': '0x50',
+    'part_number': '0xd0d'
+}
+
 soc_graviton2 = {
     'description': 'AWS Graviton2',
     'implementer': '0x41',
@@ -337,6 +383,8 @@ centriq2400: Qualcomm Centriq 2400
 cn10k:       Marvell OCTEON 10
 dpaa:        NXP DPAA
 emag:        Ampere eMAG
+altra:       Ampere Altra
+altramax:    Ampere Altra Max
 graviton2:   AWS Graviton2
 kunpeng920:  HiSilicon Kunpeng 920
 kunpeng930:  HiSilicon Kunpeng 930
@@ -358,6 +406,8 @@ socs = {
     'cn10k' : soc_cn10k,
     'dpaa': soc_dpaa,
     'emag': soc_emag,
+    'altra': soc_altra,
+    'altramax': soc_altramax,
     'graviton2': soc_graviton2,
     'kunpeng920': soc_kunpeng920,
     'kunpeng930': soc_kunpeng930,
